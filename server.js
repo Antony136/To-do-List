@@ -5,6 +5,6 @@ app.get("/", (req, res) => {
     res.send("Api is running");
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
     console.log("Server is running in localhost 5000");
 });
