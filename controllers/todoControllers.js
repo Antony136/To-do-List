@@ -10,4 +10,26 @@ const createTodo = async(req, res) => {
     }
 };
 
-module.exports = { createTodo };
+
+
+
+
+
+
+
+
+
+
+
+
+const getTodo = async(req, res) => {
+    try{
+        const todos = await Todo.find();
+        res.status(200).json(todos);
+    }catch(error){
+        res.status(500).json({"error": "Cannot get the tasks"});
+    }
+};
+
+
+module.exports = { createTodo, getTodo };
