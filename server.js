@@ -6,6 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 connectDB();
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
     res.send("Api is running");
 });
