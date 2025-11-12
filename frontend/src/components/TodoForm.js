@@ -1,13 +1,21 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function TodoForm() {
     const [title, setTitle] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Here we will send POST request to backend
-        console.log("Todo submitted:", title);
-        setTitle("");
+
+        try {
+            const res = await axios.post("http://localhost:5000/api/todos", {
+                title: title
+            });
+            console.log("Todo added:", res.data);
+            setTitle(""); // clear input after success
+        } catch (error) {
+            console.error("Error adding todo:", error);
+        }
     };
 
     return (
