@@ -18,13 +18,23 @@ function TodoList() {
         }
     };
 
+    const deleteTodo = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/api/todos/${id}`);
+            setTodos(todos.filter((todo) => todo._id !== id)); // remove from UI instantly
+        } catch (error) {
+            console.error("Error deleting todo:", error);
+        }
+    };
+
     return (
         <div>
             <h2>Todo List</h2>
             <ul>
                 {todos.map((todo) => (
                     <li key={todo._id}>
-                        {todo.title} {todo.completed ? "✅" : "❌"}
+                        {todo.title} {todo.completed ? "✅" : "❌"}{" "}
+                        <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                     </li>
                 ))}
             </ul>
