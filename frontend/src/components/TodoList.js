@@ -8,6 +8,22 @@ function TodoList() {
         fetchTodos();
     }, []);
 
+    const toggleComplete = async (id, newStatus) => {
+        try {
+            const res = await axios.patch(`http://localhost:5000/api/todos/${id}`, {
+                completed: newStatus
+            });
+
+            setTodos(
+                todos.map((todo) =>
+                    todo._id === id ? { ...todo, completed: res.data.completed } : todo
+                )
+            );
+        } catch (error) {
+            console.error("Error updating todo:", error);
+        }
+    };
+
     const fetchTodos = async () => {
         try {
             const res = await axios.get("http://localhost:5000/api/todos");
@@ -34,6 +50,9 @@ function TodoList() {
                 {todos.map((todo) => (
                     <li key={todo._id}>
                         {todo.title} {todo.completed ? "✅" : "❌"}{" "}
+                        <button onClick={() => toggleComplete(todo._id, !todo.completed)}>
+                            {todo.completed ? "Undo" : "Done"}
+                        </button>
                         <button onClick={() => deleteTodo(todo._id)}>Delete</button>
                     </li>
                 ))}
